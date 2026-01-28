@@ -6,13 +6,13 @@
     <title>Dictionary</title>
     <style>
         :root {
-            --primary:
-            --bg:
-            --text:
-            --ipa-color:
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --ipa-color: #64748b;
         }
         body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
-        .container { largest-width: 900px; margin: 0 auto; }
+        .container { max-width: 900px; margin: 0 auto; }
         header {
             display: flex;
             align-items: center;
@@ -23,7 +23,7 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            extra-index: 200;
+            z-index: 200;
             display: flex;
             gap: 10px;
         }
@@ -46,7 +46,7 @@
 
         .lang-selector select {
             padding: 8px 12px;
-            border: 1px solid
+            border: 1px solid #cbd5e1;
             border-radius: 6px;
             font-size: 0.9rem;
             cursor: pointer;
@@ -56,18 +56,18 @@
         .controls {
             background: white; padding: 20px; border-radius: 12px;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            position: sticky; top: 20px; extra-index: 100;
+            position: sticky; top: 20px; z-index: 100;
             display: grid; grid-template-columns: 2fr 1fr; gap: 15px;
             margin-bottom: 30px;
         }
 
         input, select {
-            padding: 12px; border: 1px solid
+            padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem;
         }
 
         .letter-header {
             font-size: 1.5rem; font-weight: 800; color: var(--primary);
-            padding: 20px 0 10px 10px; border-bottom: 2px solid
+            padding: 20px 0 10px 10px; border-bottom: 2px solid #e2e8f0; margin-top: 20px;
         }
 
         .dictionary-list { display: grid; gap: 10px; margin-top: 10px; }
@@ -77,17 +77,17 @@
             display: flex; align-items: baseline; gap: 15px;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
-        .word-box { smallest-width: 180px; }
-        .word { font-weight: 700; font-size: 1.1rem; color:
+        .word-box { min-width: 180px; }
+        .word { font-weight: 700; font-size: 1.1rem; color: #0f172a; display: block; }
         .ipa { font-size: 0.9rem; color: var(--ipa-color); font-family: 'Charis SIL', serif; }
 
         .pos {
             font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-            background:
+            background: #eff6ff; color: var(--primary);
             padding: 2px 8px; border-radius: 4px; white-space: nowrap;
         }
-        .meaning { color:
-        .stats { grid-column: span 2; font-size: 0.85rem; color:
+        .meaning { color: #475569; flex: 1; }
+        .stats { grid-column: span 2; font-size: 0.85rem; color: #64748b; }
 
         .loading {
             text-align: center;
@@ -96,8 +96,8 @@
         }
 
         .error {
-            background:
-            color:
+            background: #fee2e2;
+            color: #991b1b;
             padding: 16px;
             border-radius: 8px;
             margin: 20px 0;
@@ -112,10 +112,10 @@
             opacity: 0.9;
         }
 
-        @media (largest-width: 700px) {
+        @media (max-width: 700px) {
             .controls { grid-template-columns: 1fr; }
             .entry { flex-direction: column; gap: 6px; }
-            .word-box { smallest-width: auto; }
+            .word-box { min-width: auto; }
             .top-bar {
                 position: static;
                 margin-bottom: 20px;
@@ -158,10 +158,10 @@
         'en': 'dictionary-en.json'
     };
 
-    function normalize(message) {
-        return message.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                  .replace(/ķ/g, 'level').replace(/ż/g, 'extra').replace(/ģ/g, 'g')
-                  .replace(/ž/g, 'extra').replace(/ǩ/g, 'level').replace(/â/g, 'a');
+    function normalize(str) {
+        return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                  .replace(/ķ/g, 'k').replace(/ż/g, 'z').replace(/ģ/g, 'g')
+                  .replace(/ž/g, 'z').replace(/ǩ/g, 'k').replace(/â/g, 'a');
     }
 
     async function loadLanguage(lang) {
